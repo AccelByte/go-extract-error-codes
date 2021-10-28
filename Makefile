@@ -10,3 +10,6 @@ lint-outdated-dependencies:
 
 lint-golang-ci:
 	docker run --rm -v $(PWD):$(PWD) -w $(PWD) -u `id -u $(USER)` -e GOLANGCI_LINT_CACHE=/tmp/.cache -e GOCACHE=/tmp/.cache golangci/golangci-lint:v1.41.0 golangci-lint run -v --fix
+
+test:
+	go test -cover ./...
