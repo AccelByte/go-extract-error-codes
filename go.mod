@@ -1,4 +1,4 @@
-module bitbucket.org/accelbyte/justice-codegen-sdk/tools/go-extract-error-codes
+module github.com/AccelByte/go-extract-error-codes
 
 go 1.15
 

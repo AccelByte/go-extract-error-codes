@@ -1,0 +1,10 @@
+language: go
+
+go:
+  - 1.15
+
+script:
+  - go mod vendor
+  - go mod download
+  - make lint
+  - make test
