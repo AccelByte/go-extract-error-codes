@@ -23,10 +23,6 @@ func main() {
 	errorCodeDir := "accelbyte.net/justice-lobby-server/pkg/log"
 
 	// create an instance of the service
-
-	// export ENV variables from the .env + .env.local files
-	_ = envvariables.ExportEnvForTestsOnce()
-
 	cfg := &config.Config{}
 
 	// parse ENV variables into the config
@@ -37,10 +33,10 @@ func main() {
 
 	s := api.PrepareLobby(cfg, "", "", "")
 	if err != nil {
-		log.Fatalf("unable to prepare service, Err: %s", err)
+		log.Fatalf("unable to prepare the service, Err: %s", err)
 	}
 	if s == nil {
-		log.Fatal("unable to process empty service")
+		log.Fatal("unable to process an empty service")
 	}
 
 	// parse error codes configuration
