@@ -6,6 +6,7 @@ package goextracterrorcodes
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 
 	"github.com/davecgh/go-spew/spew"
@@ -47,7 +48,19 @@ type HandlerDetailsWithAppCodes struct {
 	Name     string
 	File     string
 	Line     int
-	AppCodes []*FoundAppMessage
+	AppCodes FoundAppMessages
+}
+
+type FoundAppMessages []*FoundAppMessage
+
+func (i FoundAppMessages) Len() int { return len(i) }
+
+func (i FoundAppMessages) Swap(x, y int) {
+	i[x], i[y] = i[y], i[x]
+}
+
+func (i FoundAppMessages) Less(x, y int) bool {
+	return i[x].Code < i[y].Code
 }
 
 type FoundAppMessage struct {
@@ -170,7 +183,7 @@ func (s *CallGraphWalker) LocateHandlersWithAppCodes() ([]*HandlerDetailsWithApp
 			Name:     handler.Name,
 			File:     handler.File,
 			Line:     handler.Line,
-			AppCodes: make([]*FoundAppMessage, 0),
+			AppCodes: make(FoundAppMessages, 0),
 		}
 
 		for code := range codes {
@@ -197,6 +210,8 @@ func (s *CallGraphWalker) LocateHandlersWithAppCodes() ([]*HandlerDetailsWithApp
 				})
 			}
 		}
+
+		sort.Sort(details.AppCodes)
 
 		response = append(response, details)
 	}
